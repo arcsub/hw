@@ -1,20 +1,20 @@
 package hw03frequencyanalysis
 
 import (
-	"regexp"
 	"sort"
+	"strings"
 
 	"golang.org/x/exp/maps"
 )
-
-var RE = regexp.MustCompile(`\s+`)
 
 func Top10(text string) []string {
 	if len(text) == 0 {
 		return nil
 	}
 
-	split := RE.Split(text, -1)
+	maxWords := 10
+
+	split := strings.Fields(text)
 
 	words := make(map[string]int)
 
@@ -32,5 +32,9 @@ func Top10(text string) []string {
 		return words[result[i]] > words[result[j]]
 	})
 
-	return result[:10]
+	if len(result) > maxWords {
+		result = result[:maxWords]
+	}
+
+	return result
 }
