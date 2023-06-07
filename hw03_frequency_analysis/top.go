@@ -1,10 +1,10 @@
 package hw03frequencyanalysis
 
 import (
+	"golang.org/x/exp/maps"
+	"regexp"
 	"sort"
 	"strings"
-
-	"golang.org/x/exp/maps"
 )
 
 func Top10(text string) []string {
@@ -12,14 +12,23 @@ func Top10(text string) []string {
 		return nil
 	}
 
-	maxWords := 10
+	var (
+		maxWords  = 10
+		separator = regexp.MustCompile(`[.,?!;:\s']+`)
+		tire      = regexp.MustCompile(`^[-—]+$|^$`)
+	)
 
-	split := strings.Fields(text)
+	loweredText := strings.ToLower(text)
+	separatedText := separator.Split(loweredText, -1)
 
 	words := make(map[string]int)
 
-	for _, el := range split {
-		words[el]++
+	for _, word := range separatedText {
+		if tire.MatchString(word) {
+			continue
+		}
+
+		words[word]++
 	}
 
 	result := maps.Keys(words)
