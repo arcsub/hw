@@ -1,10 +1,11 @@
 package hw03frequencyanalysis
 
 import (
-	"golang.org/x/exp/maps"
 	"regexp"
 	"sort"
 	"strings"
+
+	"golang.org/x/exp/maps"
 )
 
 func Top10(text string) []string {
